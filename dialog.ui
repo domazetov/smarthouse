@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>512</width>
-    <height>344</height>
+    <height>278</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -19,19 +19,19 @@
   <property name="minimumSize">
    <size>
     <width>512</width>
-    <height>0</height>
+    <height>278</height>
    </size>
   </property>
   <property name="maximumSize">
    <size>
     <width>512</width>
-    <height>16777215</height>
+    <height>278</height>
    </size>
   </property>
   <property name="windowTitle">
    <string>Dialog</string>
   </property>
-  <widget class="QWidget" name="">
+  <widget class="QWidget" name="layoutWidget">
    <property name="geometry">
     <rect>
      <x>10</x>
@@ -53,6 +53,9 @@
         </property>
         <property name="text">
          <string>GAS SENSOR ADC:</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
         </property>
        </widget>
       </item>
@@ -98,6 +101,9 @@ background-color: #e6176a;
         </property>
         <property name="text">
          <string>RPI CPU TEMP:</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
         </property>
        </widget>
       </item>
@@ -145,6 +151,9 @@ background-color: #e6176a;
         <property name="text">
          <string>ROOM PRESSURE:</string>
         </property>
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
+        </property>
        </widget>
       </item>
       <item>
@@ -189,6 +198,9 @@ background-color: #e6176a;
         </property>
         <property name="text">
          <string>ROOM TEMP 1:</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
         </property>
        </widget>
       </item>
@@ -236,6 +248,9 @@ background-color: #e6176a;
         <property name="text">
          <string>ROOM HUMIDITY: </string>
         </property>
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
+        </property>
        </widget>
       </item>
       <item>
@@ -281,6 +296,9 @@ background-color: #e6176a;
         <property name="text">
          <string>ROOM TEMP 2:</string>
         </property>
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
+        </property>
        </widget>
       </item>
       <item>
@@ -309,6 +327,12 @@ background-color: #e6176a;
     </item>
     <item row="5" column="0" colspan="2">
      <widget class="Line" name="line_2">
+      <property name="maximumSize">
+       <size>
+        <width>16777215</width>
+        <height>3</height>
+       </size>
+      </property>
       <property name="orientation">
        <enum>Qt::Horizontal</enum>
       </property>
@@ -326,6 +350,9 @@ background-color: #e6176a;
         </property>
         <property name="text">
          <string>MOTION SENSOR:</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
         </property>
        </widget>
       </item>
@@ -373,6 +400,9 @@ background-color: #e6176a;
         </property>
         <property name="text">
          <string>DOOR STATUS:</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
         </property>
        </widget>
       </item>

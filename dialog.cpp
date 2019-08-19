@@ -343,7 +343,6 @@ void Dialog::on_pushButton_2_clicked()
     {
         QMessageBox::warning(this,tr("WARNING"),tr("DOORS ARE ALREADY CLOSED!"));
     }
-
 }
 
 void Dialog::on_pushButton_3_clicked()
