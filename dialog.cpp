@@ -19,7 +19,7 @@
 #define SERVORIGHT	5
 
 int dht11_dat[5] = {0,0,0,0,0};
-int dht11temp, fd, adcVal, smoke, doors=0;
+int dht11temp, fd, adcVal, smoke, doors=0, pir=0;
 
 int lgh,lgt; //last good humidity and temperature
 
@@ -165,21 +165,24 @@ void Dialog::update()
         if(digitalRead(PIRPIN)==1)
         {
             ui->label_7->setText("MOTION DETECTED");
-            if(doors==0)
+            if(doors==0 && pir==0)
             {
                 ui->label_10->setText("OPENED");
                 opendoors();
                 doors=1;
             }
+            pir=1;
         }
         else
         {
             ui->label_7->setText("NO MOTION");
-            if(doors==1){
+            if(doors==1 && pir==1)
+            {
                 ui->label_10->setText("CLOSED");
                 closedoors();
-                doors=0;
+                doors=0;                
             }
+            pir=0;
         }
     }
     else
@@ -347,5 +350,5 @@ void Dialog::on_pushButton_2_clicked()
 
 void Dialog::on_pushButton_3_clicked()
 {
-    QMessageBox::information(this,tr("ABOUT"),tr("SMART HOUSE SYSTEM MONITOR \nVersion 1.0 \ngithub.com/domazetov/smarthouse"));
+    QMessageBox::information(this,tr("ABOUT"),tr("SMART HOUSE SYSTEM MONITOR \nVersion 1.0 \ngithub.com/domazetov"));
 }

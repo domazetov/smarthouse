@@ -5,7 +5,7 @@
 #include <QTimer>
 
 extern int dht11_dat[5];
-extern int dht11temp, fd, adcVal, smoke, doors;
+extern int dht11temp, fd, adcVal, smoke, doors, pir;
 extern int lgh, lgt; //last good humidity and temperature
 
 namespace Ui {

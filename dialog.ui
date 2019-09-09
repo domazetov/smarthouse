@@ -456,7 +456,7 @@ background-color: #e6176a;
          <enum>QFrame::Raised</enum>
         </property>
         <property name="text">
-         <string>Time:</string>
+         <string>TIME:</string>
         </property>
         <property name="alignment">
          <set>Qt::AlignCenter</set>
@@ -488,7 +488,7 @@ background-color: #e6176a;
          <enum>QFrame::Raised</enum>
         </property>
         <property name="text">
-         <string>Date:</string>
+         <string>DATE:</string>
         </property>
         <property name="alignment">
          <set>Qt::AlignCenter</set>

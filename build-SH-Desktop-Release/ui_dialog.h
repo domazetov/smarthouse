@@ -415,9 +415,9 @@ public:
         label_10->setText(QApplication::translate("Dialog", "CLOSED", nullptr));
         pushButton->setText(QApplication::translate("Dialog", "OPEN", nullptr));
         pushButton_2->setText(QApplication::translate("Dialog", "CLOSE", nullptr));
-        label_11->setText(QApplication::translate("Dialog", "Time:", nullptr));
+        label_11->setText(QApplication::translate("Dialog", "TIME:", nullptr));
         label_12->setText(QString());
-        label_13->setText(QApplication::translate("Dialog", "Date:", nullptr));
+        label_13->setText(QApplication::translate("Dialog", "DATE:", nullptr));
         label_14->setText(QString());
         pushButton_3->setText(QApplication::translate("Dialog", "ABOUT", nullptr));
     } // retranslateUi
