@@ -350,5 +350,5 @@ void Dialog::on_pushButton_2_clicked()
 
 void Dialog::on_pushButton_3_clicked()
 {
-    QMessageBox::information(this,tr("ABOUT"),tr("SMART HOUSE SYSTEM MONITOR\nVersion 1.0\nNebojša Domazetov\ngithub.com/domazetov "));
+    QMessageBox::information(this,tr("ABOUT"),tr("SMART HOUSE SYSTEM MONITOR\nVersion 1.0\nNebojša Domazetov\ngithub.com/domazetov"));
 }
