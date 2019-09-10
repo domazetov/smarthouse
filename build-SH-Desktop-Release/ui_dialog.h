@@ -59,6 +59,12 @@ public:
     QPushButton *pushButton;
     QPushButton *pushButton_2;
     QFrame *line_6;
+    QHBoxLayout *horizontalLayout_10;
+    QLabel *label_16;
+    QLabel *label_17;
+    QPushButton *pushButton_4;
+    QPushButton *pushButton_5;
+    QFrame *line_7;
     QHBoxLayout *horizontalLayout_9;
     QLabel *label_11;
     QLabel *label_12;
@@ -70,17 +76,17 @@ public:
     {
         if (Dialog->objectName().isEmpty())
             Dialog->setObjectName(QStringLiteral("Dialog"));
-        Dialog->resize(500, 500);
+        Dialog->resize(500, 320);
         QSizePolicy sizePolicy(QSizePolicy::Preferred, QSizePolicy::Preferred);
         sizePolicy.setHorizontalStretch(0);
         sizePolicy.setVerticalStretch(0);
         sizePolicy.setHeightForWidth(Dialog->sizePolicy().hasHeightForWidth());
         Dialog->setSizePolicy(sizePolicy);
-        Dialog->setMinimumSize(QSize(500, 278));
-        Dialog->setMaximumSize(QSize(500, 500));
+        Dialog->setMinimumSize(QSize(500, 320));
+        Dialog->setMaximumSize(QSize(500, 320));
         widget = new QWidget(Dialog);
         widget->setObjectName(QStringLiteral("widget"));
-        widget->setGeometry(QRect(10, 11, 478, 260));
+        widget->setGeometry(QRect(10, 12, 478, 307));
         verticalLayout = new QVBoxLayout(widget);
         verticalLayout->setSpacing(6);
         verticalLayout->setContentsMargins(11, 11, 11, 11);
@@ -367,6 +373,45 @@ public:
 
         verticalLayout->addWidget(line_6);
 
+        horizontalLayout_10 = new QHBoxLayout();
+        horizontalLayout_10->setSpacing(6);
+        horizontalLayout_10->setObjectName(QStringLiteral("horizontalLayout_10"));
+        label_16 = new QLabel(widget);
+        label_16->setObjectName(QStringLiteral("label_16"));
+        label_16->setFrameShape(QFrame::Panel);
+        label_16->setFrameShadow(QFrame::Raised);
+        label_16->setAlignment(Qt::AlignCenter);
+
+        horizontalLayout_10->addWidget(label_16);
+
+        label_17 = new QLabel(widget);
+        label_17->setObjectName(QStringLiteral("label_17"));
+        label_17->setFrameShape(QFrame::Panel);
+        label_17->setFrameShadow(QFrame::Raised);
+        label_17->setAlignment(Qt::AlignCenter);
+
+        horizontalLayout_10->addWidget(label_17);
+
+        pushButton_4 = new QPushButton(widget);
+        pushButton_4->setObjectName(QStringLiteral("pushButton_4"));
+
+        horizontalLayout_10->addWidget(pushButton_4);
+
+        pushButton_5 = new QPushButton(widget);
+        pushButton_5->setObjectName(QStringLiteral("pushButton_5"));
+
+        horizontalLayout_10->addWidget(pushButton_5);
+
+
+        verticalLayout->addLayout(horizontalLayout_10);
+
+        line_7 = new QFrame(widget);
+        line_7->setObjectName(QStringLiteral("line_7"));
+        line_7->setFrameShape(QFrame::HLine);
+        line_7->setFrameShadow(QFrame::Sunken);
+
+        verticalLayout->addWidget(line_7);
+
         horizontalLayout_9 = new QHBoxLayout();
         horizontalLayout_9->setSpacing(6);
         horizontalLayout_9->setObjectName(QStringLiteral("horizontalLayout_9"));
@@ -440,6 +485,10 @@ public:
         label_10->setText(QApplication::translate("Dialog", "CLOSED", nullptr));
         pushButton->setText(QApplication::translate("Dialog", "OPEN", nullptr));
         pushButton_2->setText(QApplication::translate("Dialog", "CLOSE", nullptr));
+        label_16->setText(QApplication::translate("Dialog", "LIGHT STATUS:", nullptr));
+        label_17->setText(QApplication::translate("Dialog", "OFF", nullptr));
+        pushButton_4->setText(QApplication::translate("Dialog", "TURN ON", nullptr));
+        pushButton_5->setText(QApplication::translate("Dialog", "TURN OFF", nullptr));
         label_11->setText(QApplication::translate("Dialog", "TIME:", nullptr));
         label_12->setText(QString());
         label_13->setText(QApplication::translate("Dialog", "DATE:", nullptr));

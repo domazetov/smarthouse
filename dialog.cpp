@@ -12,14 +12,17 @@
 #include <stdio.h>
 #include <unistd.h>
 
+#define LED         21
 #define DHTPIN		7
 #define PIRPIN		1
 #define ADCADDRESS	0x48
 #define SERVOLEFT	4
 #define SERVORIGHT	5
+#define GASHIGHVAL  180
+#define GASLOWVAL   170
 
 int dht11_dat[5] = {0,0,0,0,0};
-int dht11temp, fd, adcg, adcr, smoke, doors=0, pir=0;
+int dht11temp, fd, adcg, adcr, smoke, doors=0, pir=0, ledstate=0;
 
 int lgh,lgt; //last good humidity and temperature
 
@@ -34,15 +37,18 @@ Dialog::Dialog(QWidget *parent) :
     QTimer *timer = new QTimer(this);
     connect(timer, SIGNAL(timeout()), this, SLOT(update()));
     timer->start(1000);
+
     if (wiringPiSetup () == -1) exit (1);
     fd = wiringPiI2CSetup(ADCADDRESS);
 
     pinMode(PIRPIN, INPUT);
     pinMode(SERVOLEFT, OUTPUT);
     pinMode(SERVORIGHT, OUTPUT);
+    pinMode(LED, OUTPUT);
     this->setWindowTitle("Smart House System Monitor");
     //QMessageBox::information(this,tr("title"),tr("info"));
     closedoors();
+    digitalWrite(LED, LOW);
 }
 
 Dialog::~Dialog()
@@ -154,6 +160,7 @@ int adcgas(void)
 {
     wiringPiI2CReadReg8(fd, ADCADDRESS + 2) ; //dummy
     adcg = wiringPiI2CReadReg8(fd, ADCADDRESS + 2) ;
+
     return adcg;
 }
 
@@ -168,7 +175,7 @@ int adcrain(void)
 }
 
 void Dialog::update()
-{
+{ 
     if(!(ui->checkBox->isChecked()))
     {
         if(digitalRead(PIRPIN)==1)
@@ -210,7 +217,7 @@ void Dialog::update()
     ui->progressBar_6->setValue(adcgas());
     ui->progressBar_7->setValue(adcrain());
 
-    if((adcg>180) && smoke!=1)
+    if((adcg>GASHIGHVAL) && smoke!=1)
     {
         if(doors==0)
         {
@@ -221,9 +228,17 @@ void Dialog::update()
         QMessageBox::warning(this,tr("ALERT"),tr("SMOKE DETECTED!"));
         smoke=1;
     }
+    if(adcg>GASHIGHVAL){
+        ledstate=~ledstate;
+        digitalWrite(LED, ledstate);
+        ui->label_17->setText("EMERGENCY");
+    }
 
-    if(adcg<=170 && smoke==1)
+    if(adcg<=GASLOWVAL && smoke==1)
     {
+        digitalWrite(LED, LOW);
+        ledstate=0;
+        ui->label_17->setText("off");
         smoke=0;
         doors=1;
     }
@@ -375,6 +390,34 @@ void Dialog::on_pushButton_2_clicked()
 }
 
 void Dialog::on_pushButton_3_clicked()
-{
+{    
     QMessageBox::information(this,tr("ABOUT"),tr("SMART HOUSE SYSTEM MONITOR\nVersion 1.0\nNebojša Domazetov\ngithub.com/domazetov"));
+}
+
+void Dialog::on_pushButton_4_clicked()
+{
+    if(ledstate==0)
+    {
+        ui->label_17->setText("ON");
+        digitalWrite(LED, HIGH);
+        ledstate=1;
+    }
+    else
+    {
+        QMessageBox::warning(this,tr("WARNING"),tr("LIGHT IS ALREADY ON!"));
+    }
+}
+
+void Dialog::on_pushButton_5_clicked()
+{
+    if(ledstate==1)
+    {
+        ui->label_17->setText("OFF");
+        digitalWrite(LED, LOW);
+        ledstate=0;
+    }
+    else
+    {
+        QMessageBox::warning(this,tr("WARNING"),tr("LIGHT IS ALREADY OFF!"));
+    }
 }
