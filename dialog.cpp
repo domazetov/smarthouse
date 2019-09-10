@@ -238,7 +238,7 @@ void Dialog::update()
     {
         digitalWrite(LED, LOW);
         ledstate=0;
-        ui->label_17->setText("off");
+        ui->label_17->setText("OFF");
         smoke=0;
         doors=1;
     }
