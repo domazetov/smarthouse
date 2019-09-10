@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>512</width>
-    <height>278</height>
+    <width>500</width>
+    <height>500</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -18,128 +18,31 @@
   </property>
   <property name="minimumSize">
    <size>
-    <width>512</width>
+    <width>500</width>
     <height>278</height>
    </size>
   </property>
   <property name="maximumSize">
    <size>
-    <width>512</width>
-    <height>278</height>
+    <width>500</width>
+    <height>500</height>
    </size>
   </property>
   <property name="windowTitle">
    <string>Dialog</string>
   </property>
-  <widget class="QWidget" name="layoutWidget">
+  <widget class="QWidget" name="">
    <property name="geometry">
     <rect>
      <x>10</x>
      <y>11</y>
-     <width>494</width>
-     <height>257</height>
+     <width>478</width>
+     <height>260</height>
     </rect>
    </property>
-   <layout class="QFormLayout" name="formLayout">
-    <item row="0" column="0">
-     <layout class="QHBoxLayout" name="horizontalLayout_6">
-      <item>
-       <widget class="QLabel" name="label_6">
-        <property name="frameShape">
-         <enum>QFrame::Panel</enum>
-        </property>
-        <property name="frameShadow">
-         <enum>QFrame::Raised</enum>
-        </property>
-        <property name="text">
-         <string>GAS SENSOR ADC:</string>
-        </property>
-        <property name="alignment">
-         <set>Qt::AlignCenter</set>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QProgressBar" name="progressBar_6">
-        <property name="styleSheet">
-         <string notr="true">font: italic 12pt &quot;Sans Serif&quot;;
-
-background-color: #e6176a;
-</string>
-        </property>
-        <property name="minimum">
-         <number>0</number>
-        </property>
-        <property name="maximum">
-         <number>300</number>
-        </property>
-        <property name="value">
-         <number>0</number>
-        </property>
-        <property name="textVisible">
-         <bool>true</bool>
-        </property>
-        <property name="invertedAppearance">
-         <bool>false</bool>
-        </property>
-        <property name="format">
-         <string>%v</string>
-        </property>
-       </widget>
-      </item>
-     </layout>
-    </item>
-    <item row="0" column="1">
+   <layout class="QVBoxLayout" name="verticalLayout">
+    <item>
      <layout class="QHBoxLayout" name="horizontalLayout">
-      <item>
-       <widget class="QLabel" name="label">
-        <property name="frameShape">
-         <enum>QFrame::Panel</enum>
-        </property>
-        <property name="frameShadow">
-         <enum>QFrame::Raised</enum>
-        </property>
-        <property name="text">
-         <string>RPI CPU TEMP:</string>
-        </property>
-        <property name="alignment">
-         <set>Qt::AlignCenter</set>
-        </property>
-       </widget>
-      </item>
-      <item>
-       <widget class="QProgressBar" name="progressBar">
-        <property name="styleSheet">
-         <string notr="true">font: italic 12pt &quot;Sans Serif&quot;;
-
-background-color: #e6176a;
-</string>
-        </property>
-        <property name="value">
-         <number>0</number>
-        </property>
-        <property name="textVisible">
-         <bool>true</bool>
-        </property>
-        <property name="invertedAppearance">
-         <bool>false</bool>
-        </property>
-        <property name="format">
-         <string>%p°C</string>
-        </property>
-       </widget>
-      </item>
-     </layout>
-    </item>
-    <item row="1" column="0" colspan="2">
-     <widget class="Line" name="line_4">
-      <property name="orientation">
-       <enum>Qt::Horizontal</enum>
-      </property>
-     </widget>
-    </item>
-    <item row="2" column="0">
-     <layout class="QHBoxLayout" name="horizontalLayout_3">
       <item>
        <widget class="QLabel" name="label_3">
         <property name="frameShape">
@@ -158,6 +61,12 @@ background-color: #e6176a;
       </item>
       <item>
        <widget class="QProgressBar" name="progressBar_3">
+        <property name="maximumSize">
+         <size>
+          <width>107</width>
+          <height>16777215</height>
+         </size>
+        </property>
         <property name="styleSheet">
          <string notr="true">font: italic 12pt &quot;Sans Serif&quot;;
 
@@ -184,10 +93,6 @@ background-color: #e6176a;
         </property>
        </widget>
       </item>
-     </layout>
-    </item>
-    <item row="2" column="1">
-     <layout class="QHBoxLayout" name="horizontalLayout_2">
       <item>
        <widget class="QLabel" name="label_2">
         <property name="frameShape">
@@ -206,6 +111,18 @@ background-color: #e6176a;
       </item>
       <item>
        <widget class="QProgressBar" name="progressBar_2">
+        <property name="minimumSize">
+         <size>
+          <width>107</width>
+          <height>0</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>107</width>
+          <height>16777215</height>
+         </size>
+        </property>
         <property name="styleSheet">
          <string notr="true">font: italic 12pt &quot;Sans Serif&quot;;
 
@@ -228,15 +145,15 @@ background-color: #e6176a;
       </item>
      </layout>
     </item>
-    <item row="3" column="0" colspan="2">
-     <widget class="Line" name="line_3">
+    <item>
+     <widget class="Line" name="line">
       <property name="orientation">
        <enum>Qt::Horizontal</enum>
       </property>
      </widget>
     </item>
-    <item row="4" column="0">
-     <layout class="QHBoxLayout" name="horizontalLayout_4">
+    <item>
+     <layout class="QHBoxLayout" name="horizontalLayout_2">
       <item>
        <widget class="QLabel" name="label_4">
         <property name="frameShape">
@@ -255,6 +172,12 @@ background-color: #e6176a;
       </item>
       <item>
        <widget class="QProgressBar" name="progressBar_4">
+        <property name="maximumSize">
+         <size>
+          <width>107</width>
+          <height>16777215</height>
+         </size>
+        </property>
         <property name="styleSheet">
          <string notr="true">font: italic 12pt &quot;Sans Serif&quot;;
 
@@ -281,10 +204,6 @@ background-color: #e6176a;
         </property>
        </widget>
       </item>
-     </layout>
-    </item>
-    <item row="4" column="1">
-     <layout class="QHBoxLayout" name="horizontalLayout_5">
       <item>
        <widget class="QLabel" name="label_5">
         <property name="frameShape">
@@ -303,6 +222,12 @@ background-color: #e6176a;
       </item>
       <item>
        <widget class="QProgressBar" name="progressBar_5">
+        <property name="maximumSize">
+         <size>
+          <width>107</width>
+          <height>16777215</height>
+         </size>
+        </property>
         <property name="styleSheet">
          <string notr="true">font: italic 12pt &quot;Sans Serif&quot;;
 
@@ -325,20 +250,190 @@ background-color: #e6176a;
       </item>
      </layout>
     </item>
-    <item row="5" column="0" colspan="2">
+    <item>
      <widget class="Line" name="line_2">
-      <property name="maximumSize">
-       <size>
-        <width>16777215</width>
-        <height>3</height>
-       </size>
-      </property>
       <property name="orientation">
        <enum>Qt::Horizontal</enum>
       </property>
      </widget>
     </item>
-    <item row="6" column="0" colspan="2">
+    <item>
+     <layout class="QHBoxLayout" name="horizontalLayout_3">
+      <item>
+       <widget class="QLabel" name="label_6">
+        <property name="frameShape">
+         <enum>QFrame::Panel</enum>
+        </property>
+        <property name="frameShadow">
+         <enum>QFrame::Raised</enum>
+        </property>
+        <property name="text">
+         <string>GAS/SMOKE:</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QProgressBar" name="progressBar_6">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>150</width>
+          <height>30</height>
+         </size>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">font: italic 12pt &quot;Sans Serif&quot;;
+
+background-color: #e6176a;
+</string>
+        </property>
+        <property name="minimum">
+         <number>0</number>
+        </property>
+        <property name="maximum">
+         <number>255</number>
+        </property>
+        <property name="value">
+         <number>0</number>
+        </property>
+        <property name="textVisible">
+         <bool>false</bool>
+        </property>
+        <property name="orientation">
+         <enum>Qt::Vertical</enum>
+        </property>
+        <property name="invertedAppearance">
+         <bool>false</bool>
+        </property>
+        <property name="format">
+         <string>%v</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLabel" name="label_15">
+        <property name="frameShape">
+         <enum>QFrame::Panel</enum>
+        </property>
+        <property name="frameShadow">
+         <enum>QFrame::Raised</enum>
+        </property>
+        <property name="text">
+         <string>RAIN:</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QProgressBar" name="progressBar_7">
+        <property name="enabled">
+         <bool>true</bool>
+        </property>
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Fixed" vsizetype="Minimum">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>100</width>
+          <height>30</height>
+         </size>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">font: italic 12pt &quot;Sans Serif&quot;;
+
+background-color: #e6176a;
+</string>
+        </property>
+        <property name="minimum">
+         <number>0</number>
+        </property>
+        <property name="maximum">
+         <number>255</number>
+        </property>
+        <property name="value">
+         <number>0</number>
+        </property>
+        <property name="textVisible">
+         <bool>false</bool>
+        </property>
+        <property name="orientation">
+         <enum>Qt::Vertical</enum>
+        </property>
+        <property name="invertedAppearance">
+         <bool>true</bool>
+        </property>
+        <property name="format">
+         <string>%v</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLabel" name="label">
+        <property name="frameShape">
+         <enum>QFrame::Panel</enum>
+        </property>
+        <property name="frameShadow">
+         <enum>QFrame::Raised</enum>
+        </property>
+        <property name="text">
+         <string>RPI CPU TEMP:</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QProgressBar" name="progressBar">
+        <property name="maximumSize">
+         <size>
+          <width>107</width>
+          <height>16777215</height>
+         </size>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">font: italic 12pt &quot;Sans Serif&quot;;
+
+background-color: #e6176a;
+</string>
+        </property>
+        <property name="value">
+         <number>0</number>
+        </property>
+        <property name="textVisible">
+         <bool>true</bool>
+        </property>
+        <property name="invertedAppearance">
+         <bool>false</bool>
+        </property>
+        <property name="format">
+         <string>%p°C</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </item>
+    <item>
+     <widget class="Line" name="line_3">
+      <property name="orientation">
+       <enum>Qt::Horizontal</enum>
+      </property>
+     </widget>
+    </item>
+    <item>
      <layout class="QHBoxLayout" name="horizontalLayout_7">
       <item>
        <widget class="QLabel" name="label_8">
@@ -381,14 +476,14 @@ background-color: #e6176a;
       </item>
      </layout>
     </item>
-    <item row="7" column="0" colspan="2">
-     <widget class="Line" name="line">
+    <item>
+     <widget class="Line" name="line_5">
       <property name="orientation">
        <enum>Qt::Horizontal</enum>
       </property>
      </widget>
     </item>
-    <item row="8" column="0" colspan="2">
+    <item>
      <layout class="QHBoxLayout" name="horizontalLayout_8">
       <item>
        <widget class="QLabel" name="label_9">
@@ -438,14 +533,14 @@ background-color: #e6176a;
       </item>
      </layout>
     </item>
-    <item row="9" column="0" colspan="2">
-     <widget class="Line" name="line_5">
+    <item>
+     <widget class="Line" name="line_6">
       <property name="orientation">
        <enum>Qt::Horizontal</enum>
       </property>
      </widget>
     </item>
-    <item row="10" column="0" colspan="2">
+    <item>
      <layout class="QHBoxLayout" name="horizontalLayout_9">
       <item>
        <widget class="QLabel" name="label_11">

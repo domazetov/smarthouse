@@ -19,7 +19,7 @@
 #define SERVORIGHT	5
 
 int dht11_dat[5] = {0,0,0,0,0};
-int dht11temp, fd, adcVal, smoke, doors=0, pir=0;
+int dht11temp, fd, adcg, adcr, smoke, doors=0, pir=0;
 
 int lgh,lgt; //last good humidity and temperature
 
@@ -150,13 +150,22 @@ int dht11(void)
     }
 }
 
-int adc(void)
+int adcgas(void)
 {
     wiringPiI2CReadReg8(fd, ADCADDRESS + 2) ; //dummy
-    adcVal = wiringPiI2CReadReg8(fd, ADCADDRESS + 2) ;
-    return adcVal;
+    adcg = wiringPiI2CReadReg8(fd, ADCADDRESS + 2) ;
+    return adcg;
 }
 
+int adcrain(void)
+{
+    wiringPiI2CReadReg8(fd, ADCADDRESS + 3) ; //dummy
+    adcr = wiringPiI2CReadReg8(fd, ADCADDRESS + 3) ;
+
+    adcr = abs(adcr-255);
+
+    return adcr;
+}
 
 void Dialog::update()
 {
@@ -198,9 +207,11 @@ void Dialog::update()
     ui->progressBar_4->setValue(dht11());
     ui->progressBar_5->setValue(dht11temp);
 
-    ui->progressBar_6->setValue(adc());
+    ui->progressBar_6->setValue(adcgas());
+    ui->progressBar_7->setValue(adcrain());
 
-    if((adcVal>180) && smoke!=1){
+    if((adcg>180) && smoke!=1)
+    {
         if(doors==0)
         {
             ui->label_10->setText("OPENED");
@@ -210,7 +221,9 @@ void Dialog::update()
         QMessageBox::warning(this,tr("ALERT"),tr("SMOKE DETECTED!"));
         smoke=1;
     }
-    if(adcVal<=170 && smoke==1){
+
+    if(adcg<=170 && smoke==1)
+    {
         smoke=0;
         doors=1;
     }
@@ -263,12 +276,25 @@ void Dialog::update()
               "background: #d4d4d4;"
               "}");
 
+    QString st5 = QString (
+                 "QProgressBar::chunk {"
+                 "background-color: #347deb;"
+                 "}");
+
+    st5.append("QProgressBar {"
+              "border: 1px solid #a6a6a6;"
+              "text-align: center;"
+              "font: italic 12pt Sans Serif;"
+              "background: #d4d4d4;"
+              "}");
+
     ui->progressBar->setStyleSheet(st);
     ui->progressBar_2->setStyleSheet(st2);
     ui->progressBar_3->setStyleSheet(st2);
     ui->progressBar_4->setStyleSheet(st3);
     ui->progressBar_5->setStyleSheet(st3);
     ui->progressBar_6->setStyleSheet(st4);
+    ui->progressBar_7->setStyleSheet(st5);
 
     ui->label_12->setText(QTime::currentTime().toString("hh:mm:ss"));
     ui->label_14->setText(QDate::currentDate().toString("dd.MM.yyyy"));
