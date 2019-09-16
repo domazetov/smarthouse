@@ -18,6 +18,7 @@
 #include <QtWidgets/QLabel>
 #include <QtWidgets/QProgressBar>
 #include <QtWidgets/QPushButton>
+#include <QtWidgets/QTextBrowser>
 #include <QtWidgets/QVBoxLayout>
 #include <QtWidgets/QWidget>
 
@@ -66,27 +67,31 @@ public:
     QPushButton *pushButton_5;
     QFrame *line_7;
     QHBoxLayout *horizontalLayout_9;
-    QLabel *label_11;
-    QLabel *label_12;
     QLabel *label_13;
     QLabel *label_14;
+    QLabel *label_11;
+    QLabel *label_12;
     QPushButton *pushButton_3;
+    QFrame *line_4;
+    QHBoxLayout *horizontalLayout_4;
+    QTextBrowser *textBrowser;
+    QPushButton *pushButton_6;
 
     void setupUi(QDialog *Dialog)
     {
         if (Dialog->objectName().isEmpty())
             Dialog->setObjectName(QStringLiteral("Dialog"));
-        Dialog->resize(500, 320);
+        Dialog->resize(500, 390);
         QSizePolicy sizePolicy(QSizePolicy::Preferred, QSizePolicy::Preferred);
         sizePolicy.setHorizontalStretch(0);
         sizePolicy.setVerticalStretch(0);
         sizePolicy.setHeightForWidth(Dialog->sizePolicy().hasHeightForWidth());
         Dialog->setSizePolicy(sizePolicy);
-        Dialog->setMinimumSize(QSize(500, 320));
-        Dialog->setMaximumSize(QSize(500, 320));
+        Dialog->setMinimumSize(QSize(500, 390));
+        Dialog->setMaximumSize(QSize(500, 390));
         widget = new QWidget(Dialog);
         widget->setObjectName(QStringLiteral("widget"));
-        widget->setGeometry(QRect(10, 12, 478, 307));
+        widget->setGeometry(QRect(10, 13, 480, 374));
         verticalLayout = new QVBoxLayout(widget);
         verticalLayout->setSpacing(6);
         verticalLayout->setContentsMargins(11, 11, 11, 11);
@@ -415,22 +420,6 @@ public:
         horizontalLayout_9 = new QHBoxLayout();
         horizontalLayout_9->setSpacing(6);
         horizontalLayout_9->setObjectName(QStringLiteral("horizontalLayout_9"));
-        label_11 = new QLabel(widget);
-        label_11->setObjectName(QStringLiteral("label_11"));
-        label_11->setFrameShape(QFrame::Panel);
-        label_11->setFrameShadow(QFrame::Raised);
-        label_11->setAlignment(Qt::AlignCenter);
-
-        horizontalLayout_9->addWidget(label_11);
-
-        label_12 = new QLabel(widget);
-        label_12->setObjectName(QStringLiteral("label_12"));
-        label_12->setFrameShape(QFrame::Panel);
-        label_12->setFrameShadow(QFrame::Raised);
-        label_12->setAlignment(Qt::AlignCenter);
-
-        horizontalLayout_9->addWidget(label_12);
-
         label_13 = new QLabel(widget);
         label_13->setObjectName(QStringLiteral("label_13"));
         label_13->setFrameShape(QFrame::Panel);
@@ -447,6 +436,22 @@ public:
 
         horizontalLayout_9->addWidget(label_14);
 
+        label_11 = new QLabel(widget);
+        label_11->setObjectName(QStringLiteral("label_11"));
+        label_11->setFrameShape(QFrame::Panel);
+        label_11->setFrameShadow(QFrame::Raised);
+        label_11->setAlignment(Qt::AlignCenter);
+
+        horizontalLayout_9->addWidget(label_11);
+
+        label_12 = new QLabel(widget);
+        label_12->setObjectName(QStringLiteral("label_12"));
+        label_12->setFrameShape(QFrame::Panel);
+        label_12->setFrameShadow(QFrame::Raised);
+        label_12->setAlignment(Qt::AlignCenter);
+
+        horizontalLayout_9->addWidget(label_12);
+
         pushButton_3 = new QPushButton(widget);
         pushButton_3->setObjectName(QStringLiteral("pushButton_3"));
 
@@ -454,6 +459,39 @@ public:
 
 
         verticalLayout->addLayout(horizontalLayout_9);
+
+        line_4 = new QFrame(widget);
+        line_4->setObjectName(QStringLiteral("line_4"));
+        line_4->setFrameShape(QFrame::HLine);
+        line_4->setFrameShadow(QFrame::Sunken);
+
+        verticalLayout->addWidget(line_4);
+
+        horizontalLayout_4 = new QHBoxLayout();
+        horizontalLayout_4->setSpacing(6);
+        horizontalLayout_4->setObjectName(QStringLiteral("horizontalLayout_4"));
+        textBrowser = new QTextBrowser(widget);
+        textBrowser->setObjectName(QStringLiteral("textBrowser"));
+        textBrowser->setMinimumSize(QSize(390, 0));
+        textBrowser->setMaximumSize(QSize(390, 50));
+        QFont font;
+        font.setPointSize(10);
+        font.setBold(true);
+        font.setItalic(false);
+        font.setWeight(75);
+        textBrowser->setFont(font);
+
+        horizontalLayout_4->addWidget(textBrowser);
+
+        pushButton_6 = new QPushButton(widget);
+        pushButton_6->setObjectName(QStringLiteral("pushButton_6"));
+        pushButton_6->setMinimumSize(QSize(80, 30));
+        pushButton_6->setMaximumSize(QSize(80, 30));
+
+        horizontalLayout_4->addWidget(pushButton_6);
+
+
+        verticalLayout->addLayout(horizontalLayout_4);
 
 
         retranslateUi(Dialog);
@@ -489,11 +527,17 @@ public:
         label_17->setText(QApplication::translate("Dialog", "OFF", nullptr));
         pushButton_4->setText(QApplication::translate("Dialog", "TURN ON", nullptr));
         pushButton_5->setText(QApplication::translate("Dialog", "TURN OFF", nullptr));
-        label_11->setText(QApplication::translate("Dialog", "TIME:", nullptr));
-        label_12->setText(QString());
         label_13->setText(QApplication::translate("Dialog", "DATE:", nullptr));
         label_14->setText(QString());
+        label_11->setText(QApplication::translate("Dialog", "TIME:", nullptr));
+        label_12->setText(QString());
         pushButton_3->setText(QApplication::translate("Dialog", "ABOUT", nullptr));
+        textBrowser->setHtml(QApplication::translate("Dialog", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
+"<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"
+"p, li { white-space: pre-wrap; }\n"
+"</style></head><body style=\" font-family:'PibotoLt'; font-size:10pt; font-weight:600; font-style:normal;\">\n"
+"<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:12pt; font-weight:400;\"><br /></p></body></html>", nullptr));
+        pushButton_6->setText(QApplication::translate("Dialog", "Clear log", nullptr));
     } // retranslateUi
 
 };

@@ -5,7 +5,8 @@
 #include <QTimer>
 
 extern int dht11_dat[5];
-extern int dht11temp, fd, adcg, adcr, smoke, doors, pir;
+extern int dht11temp, fd, adcg, adcr, smoke, doors, pir, ledstate;
+extern int logstartup, motionsensor, rainsensor;
 extern int lgh, lgt; //last good humidity and temperature
 
 namespace Ui {
@@ -23,6 +24,11 @@ public:
 
 private slots:
     void update();
+    void logger(char logdata[]);
+    void pircontrol();
+    void gascontrol();
+    void raincontrol();
+    void styler();
 
     void on_pushButton_clicked();
 
@@ -33,6 +39,8 @@ private slots:
     void on_pushButton_4_clicked();
 
     void on_pushButton_5_clicked();
+
+    void on_pushButton_6_clicked();
 
 private:
     Ui::Dialog *ui;

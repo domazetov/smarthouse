@@ -1,30 +1,35 @@
 #include "dialog.h"
 #include "ui_dialog.h"
+
 #include <QTimer>
 #include <QTime>
 #include <QDate>
-#include <string.h>
 #include <QMessageBox>
+#include <QFile>
+#include <QTextStream>
+#include <QScrollBar>
 
 #include <wiringPiI2C.h>
 #include <wiringPi.h>
+
 #include <stdlib.h>
 #include <stdio.h>
+#include <string.h>
 #include <unistd.h>
 
 #define LED         21
 #define DHTPIN		7
-#define PIRPIN		1
+#define PIRPIN		25
 #define ADCADDRESS	0x48
 #define SERVOLEFT	4
 #define SERVORIGHT	5
-#define GASHIGHVAL  180
-#define GASLOWVAL   170
+#define GASHIGHVAL  190
+#define RAINVAL     80
 
 int dht11_dat[5] = {0,0,0,0,0};
 int dht11temp, fd, adcg, adcr, smoke, doors=0, pir=0, ledstate=0;
-
-int lgh,lgt; //last good humidity and temperature
+int logstartup=0, motionsensor=1, rainsensor=0;
+int lgh, lgt;
 
 void closedoors(void);
 void opendoors(void);
@@ -46,13 +51,14 @@ Dialog::Dialog(QWidget *parent) :
     pinMode(SERVORIGHT, OUTPUT);
     pinMode(LED, OUTPUT);
     this->setWindowTitle("Smart House System Monitor");
-    //QMessageBox::information(this,tr("title"),tr("info"));
     closedoors();
     digitalWrite(LED, LOW);
+    ui->checkBox->setChecked(true);
 }
 
 Dialog::~Dialog()
 {
+    logger("System shutdown...");
     delete ui;
 }
 
@@ -66,7 +72,7 @@ int bmptemp(void)
     for(i=0;i<10;i++)
     fscanf(ft,"%s", value);
     fclose(ft);
-    int temp=atoi(value)/1000; //scaling temperature
+    int temp=atoi(value)/1000;
     return temp;
 }
 
@@ -80,7 +86,7 @@ int raspberrytemp(void)
     for(i=0;i<10;i++)
     fscanf(ft,"%s", value);
     fclose(ft);
-    int temp = atoi(value)/1000; //scaling temperature
+    int temp = atoi(value)/1000;
     return temp;
 }
 
@@ -94,7 +100,7 @@ double bmppres(void)
     for(i=0;i<20;i++)
     fscanf(ft,"%s", value);
     fclose(ft);
-    double pres=atof(value)*10; //scaling pressure
+    double pres=atof(value)*10;
     return pres;
 };
 
@@ -113,7 +119,6 @@ int dht11(void)
     delayMicroseconds(40);
     pinMode(DHTPIN, INPUT);
 
-    //detect change and read data
     for ( i=0; i< 85; i++)
     {
         counter = 0;
@@ -134,7 +139,9 @@ int dht11(void)
         {
             dht11_dat[j/8] <<= 1;
             if (counter > 25)
+            {
                 dht11_dat[j/8] |= 1;
+            }
             j++;
         }
     }
@@ -160,7 +167,6 @@ int adcgas(void)
 {
     wiringPiI2CReadReg8(fd, ADCADDRESS + 2) ; //dummy
     adcg = wiringPiI2CReadReg8(fd, ADCADDRESS + 2) ;
-
     return adcg;
 }
 
@@ -168,22 +174,49 @@ int adcrain(void)
 {
     wiringPiI2CReadReg8(fd, ADCADDRESS + 3) ; //dummy
     adcr = wiringPiI2CReadReg8(fd, ADCADDRESS + 3) ;
-
     adcr = abs(adcr-255);
-
     return adcr;
 }
 
-void Dialog::update()
-{ 
+void Dialog::logger(char logdata[])
+{
+    QFile file0("/home/pi/SHSM/log.txt");
+    if(!file0.open(QIODevice::Append | QIODevice::Text))
+    {
+        QMessageBox::information(this, "error", file0.errorString());
+    }
+    QString logtime = QTime::currentTime().toString("hh:mm:ss");
+    QString logdate = QDate::currentDate().toString("dd.MM.yyyy");
+
+    QTextStream out(&file0);
+    out << logdate << " @ " << logtime << " : " << logdata << "\n";
+    file0.close();
+
+    QFile file("/home/pi/SHSM/log.txt");
+    if(!file.open(QIODevice::ReadOnly))
+    {
+        QMessageBox::information(this, "error", file.errorString());
+    }
+    QTextStream in(&file);
+    ui->textBrowser->setText(in.readAll());
+    file.close();
+
+    QScrollBar *sb = ui->textBrowser->verticalScrollBar();
+    sb->setValue(sb->maximum());
+}
+
+void Dialog::pircontrol()
+{
     if(!(ui->checkBox->isChecked()))
     {
+        motionsensor = 0;
         if(digitalRead(PIRPIN)==1)
         {
             ui->label_7->setText("MOTION DETECTED");
             if(doors==0 && pir==0)
             {
                 ui->label_10->setText("OPENED");
+                logger("Motion detected, doors are opened");
                 opendoors();
                 doors=1;
             }
@@ -195,8 +228,9 @@ void Dialog::update()
             if(doors==1 && pir==1)
             {
                 ui->label_10->setText("CLOSED");
+                logger("No more motion, doors are closed");
                 closedoors();
-                doors=0;                
+                doors=0;
             }
             pir=0;
         }
@@ -204,19 +238,16 @@ void Dialog::update()
     else
     {
         ui->label_7->setText("SENSOR DISABLED");
+        if(motionsensor == 0)
+        {
+            logger("Motion sensor disabled");
+            motionsensor = 1;
+        }
     }
+}
 
-    ui->progressBar->setValue(raspberrytemp());
-
-    ui->progressBar_2->setValue(bmptemp());
-    ui->progressBar_3->setValue(bmppres());
-
-    ui->progressBar_4->setValue(dht11());
-    ui->progressBar_5->setValue(dht11temp);
-
-    ui->progressBar_6->setValue(adcgas());
-    ui->progressBar_7->setValue(adcrain());
-
+void Dialog::gascontrol()
+{
     if((adcg>GASHIGHVAL) && smoke!=1)
     {
         if(doors==0)
@@ -225,7 +256,7 @@ void Dialog::update()
             opendoors();
             doors=3;
         }
-        QMessageBox::warning(this,tr("ALERT"),tr("SMOKE DETECTED!"));
+        logger("Combustible gas or smoke detected");
         smoke=1;
     }
     if(adcg>GASHIGHVAL){
@@ -234,7 +265,7 @@ void Dialog::update()
         ui->label_17->setText("EMERGENCY");
     }
 
-    if(adcg<=GASLOWVAL && smoke==1)
+    if(adcg<GASHIGHVAL && smoke==1)
     {
         digitalWrite(LED, LOW);
         ledstate=0;
@@ -242,7 +273,26 @@ void Dialog::update()
         smoke=0;
         doors=1;
     }
+}
 
+void Dialog::raincontrol()
+{
+    if(adcr > RAINVAL)
+    {
+        if(rainsensor == 0)
+        {
+        logger("It's probably raining outside");
+        rainsensor = 1;
+        }
+    }
+    else
+    {
+        rainsensor = 0;
+    }
+}
+
+void Dialog::styler()
+{
     QString st = QString (
                  "QProgressBar::chunk {"
                  "background-color: #eb3443;"
@@ -311,10 +361,30 @@ void Dialog::update()
     ui->progressBar_6->setStyleSheet(st4);
     ui->progressBar_7->setStyleSheet(st5);
 
+}
+
+void Dialog::update()
+{ 
+    if(logstartup==0)
+    {
+        logger("System startup...");
+        logstartup=1;
+    }
+
+    ui->progressBar->setValue(raspberrytemp());
+    ui->progressBar_2->setValue(bmptemp());
+    ui->progressBar_3->setValue(bmppres());
+    ui->progressBar_4->setValue(dht11());
+    ui->progressBar_5->setValue(dht11temp);
+    ui->progressBar_6->setValue(adcgas());
+    ui->progressBar_7->setValue(adcrain());
+
+    pircontrol();
+    gascontrol();
+    raincontrol();
+    styler();
     ui->label_12->setText(QTime::currentTime().toString("hh:mm:ss"));
     ui->label_14->setText(QDate::currentDate().toString("dd.MM.yyyy"));
-
-
 }
 
 void opendoors(void)
@@ -362,8 +432,10 @@ void Dialog::on_pushButton_clicked()
     if(doors==0)
     {
         ui->label_10->setText("OPENED");
+        logger("Doors are opened");
         opendoors();
         doors=1;
+        ui->checkBox->setChecked(true);
     }
     else
     {
@@ -376,6 +448,7 @@ void Dialog::on_pushButton_2_clicked()
     if(doors==1)
     {
         ui->label_10->setText("CLOSED");
+        logger("Doors are closed");
         closedoors();
         doors=0;
     }
@@ -399,6 +472,7 @@ void Dialog::on_pushButton_4_clicked()
     if(ledstate==0)
     {
         ui->label_17->setText("ON");
+        logger("Lights are turned on");
         digitalWrite(LED, HIGH);
         ledstate=1;
     }
@@ -413,6 +487,7 @@ void Dialog::on_pushButton_5_clicked()
     if(ledstate==1)
     {
         ui->label_17->setText("OFF");
+        logger("Lights are turned off");
         digitalWrite(LED, LOW);
         ledstate=0;
     }
@@ -420,4 +495,18 @@ void Dialog::on_pushButton_5_clicked()
     {
         QMessageBox::warning(this,tr("WARNING"),tr("LIGHT IS ALREADY OFF!"));
     }
+}
+
+void Dialog::on_pushButton_6_clicked()
+{
+    QFile file0("/home/pi/SHSM/log.txt");
+    if(!file0.open(QIODevice::WriteOnly | QIODevice::Text))
+    {
+        QMessageBox::information(this, "error", file0.errorString());
+    }
+    QTextStream out(&file0);
+    out << "";
+    file0.close();
+
+    logger("New log started");
 }
